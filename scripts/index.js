@@ -1,13 +1,16 @@
 //Темплейт карточки
 const cardTemplate = document.querySelector("#card-template").content;
 // DOM узлы
-const placesList = document.querySelector(".places__list");
+const placeList = document.querySelector(".places__list");
 
 //Функция создания карточки
 const addCard = (cardData, { deleteCard }) => {
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
-
-  cardElement.querySelector(".card__image").src = cardData.link;
+  
+  const cardImage = cardElement.querySelector('.card__image')
+  cardImage.src = cardData.link; 
+  cardImage.alt = cardData.name;
+ 
   cardElement.querySelector(".card__title").textContent = cardData.name;
 
   cardElement
@@ -20,16 +23,10 @@ const addCard = (cardData, { deleteCard }) => {
 };
 //Функция удаления карточки
 const deleteCard = (cardElement) => {
-  const cards = document.querySelectorAll(".card");
-  for (let i = 0; i < cards.length; i++) {
-    if (cards[i] == cardElement) {
-      cards[i].remove();
-      break;
-    }
-  }
+  cardElement.remove();
 };
 
 //Вывести карточки на страницу
 initialCards.forEach((item) => {
-  placesList.append(addCard(item, { deleteCard }));
+  placeList.append(addCard(item, { deleteCard }));
 });
