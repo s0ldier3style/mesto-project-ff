@@ -13,7 +13,7 @@ const cardsContainer = document.querySelector(".places__list");
 const popupImage = document.querySelector(".popup__image");
 const popupCaption = document.querySelector(".popup__caption");
 
-const editProfileForm = document.querySelector("form[name='edit-profile']");
+const editProfileForm = document.forms["edit-profile"];
 const nameInput = editProfileForm.querySelector(".popup__input_type_name");
 const jobInput = editProfileForm.querySelector(
   ".popup__input_type_description"
@@ -31,7 +31,7 @@ const editCardBtn = document.querySelector(".profile__edit-button");
 const createCardBtn = document.querySelector(".profile__add-button");
 const createCardPopUp = document.querySelector(".popup_type_new-card");
 
-const createCardForm = document.querySelector("form[name='new-place']");
+const createCardForm = document.forms["new-place"];
 
 const cardNameInput = createCardForm.querySelector(".popup__input_type_card-name");
 const cardUrlInput = createCardForm.querySelector(".popup__input_type_url");
@@ -51,14 +51,15 @@ function handleImageClick(name, link) {
   openModal(imagePopUp);
 }
 
-function editProfileFormSubmit(evt) {
+function handleProfileFormSubmit(evt) {
   evt.preventDefault(); //
   profileName.textContent = nameInput.value;
   profileJob.textContent = jobInput.value;
   closeModal(editProfilePopUp);
 }
 
-function createCardFormSubmit(evt) {
+function handleCardFormSubmit(evt) {
+  console.log(evt.target)
   evt.preventDefault();
   const cardObj = {
     name: cardNameInput.value,
@@ -68,8 +69,7 @@ function createCardFormSubmit(evt) {
     createCard(cardObj, { deleteCard, handleImageClick, toggleLikeBtn }));
     
   closeModal(createCardPopUp);
-  cardNameInput.value = '';
-  cardUrlInput.value = '';
+  createCardForm.reset();
 }
 
 popupCloseBtns.forEach((item) => {
@@ -89,11 +89,12 @@ createCardBtn.addEventListener("click", () => {
   openModal(createCardPopUp);
 });
 
-document.addEventListener("click", (event) => {
-  if (event.target.classList.contains("popup"))
-    event.target.classList.remove("popup_is-opened");
-});
+document.querySelectorAll('.popup').forEach((item) => {
+  item.addEventListener("click", (event) => {
+      closeModal(event.target);
+  });
+})
 
-editProfileForm.addEventListener("submit", editProfileFormSubmit);
+editProfileForm.addEventListener("submit", handleProfileFormSubmit);
 
-createCardForm.addEventListener("submit", createCardFormSubmit);
+createCardForm.addEventListener("submit", handleCardFormSubmit);
