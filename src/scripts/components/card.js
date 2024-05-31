@@ -1,7 +1,7 @@
 import { cardTemplate } from "../../scripts";
 
 //Функция создания карточки
-export const addCard = (cardData, { deleteCard, handleImageClick, likeBtnHandler}) => {
+export const createCard = (cardData, { deleteCard, handleImageClick, toggleLikeBtn}) => {
     const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
     
     const cardImage = cardElement.querySelector('.card__image')
@@ -24,14 +24,16 @@ export const addCard = (cardData, { deleteCard, handleImageClick, likeBtnHandler
       });
   
       likeBtn.addEventListener('click', () => {
-        likeBtnHandler(likeBtn);
+        toggleLikeBtn(likeBtn);
       });
   
     return cardElement;
+
+    
   };
 
   //Функция события "лайк"
-  export function likeBtnHandler(likeBtn) {
+  export function toggleLikeBtn(likeBtn) {
     likeBtn.classList.toggle('card__like-button_is-active');
   }
 
