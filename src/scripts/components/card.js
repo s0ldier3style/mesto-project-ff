@@ -1,8 +1,7 @@
-import { cardTemplate } from "../../scripts";
-
 //Функция создания карточки
 export const createCard = (cardData, { deleteCard, handleImageClick, toggleLikeBtn}) => {
-    const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
+  const cardTemplate = document.querySelector("#card-template").content; 
+  const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
     
     const cardImage = cardElement.querySelector('.card__image')
   

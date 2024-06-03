@@ -7,7 +7,6 @@ import {
 } from "./components/card.js";
 import { openModal, closeModal } from "./components/modal.js";
 
-export const cardTemplate = document.querySelector("#card-template").content;
 const cardsContainer = document.querySelector(".places__list");
 
 const popupImage = document.querySelector(".popup__image");
@@ -91,7 +90,9 @@ createCardBtn.addEventListener("click", () => {
 
 document.querySelectorAll('.popup').forEach((item) => {
   item.addEventListener("click", (event) => {
+    if (event.target === item) {
       closeModal(event.target);
+    }
   });
 })
 
