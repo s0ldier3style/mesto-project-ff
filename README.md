@@ -1,7 +1,7 @@
 # *Проектная работа Mesto*
-Alt-H1
-## Ссылка проект https://s0ldier3style.github.io/mesto-project-ff/
-Alt-H1
+
+## Ссылка на [проект](https://s0ldier3style.github.io/mesto-project-ff/ "Mesto")
+
 ### **В данной проекной работе реализовано:**
 1. Инфраструктурное окружение с помощью Webpack.
 2. Струкрутирование кода на отдельные модули.
