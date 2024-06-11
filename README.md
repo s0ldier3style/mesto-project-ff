@@ -1,4 +1,4 @@
-# *Проектная работа Mesto*
+# Проектная работа *Mesto*
 
 ## Ссылка на [проект](https://s0ldier3style.github.io/mesto-project-ff/ "Mesto")
 
