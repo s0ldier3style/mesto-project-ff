@@ -85,16 +85,22 @@ const popupCloseBtns = document.querySelectorAll(
   ".popup > .popup__content > .popup__close"
 );
 
+// Функция для изменения текста кнопки
+function changeElementText(element, text) {
+  element.textContent = text;
+}
+
 // Загрузка информации о пользователе и карточек
 Promise.all([getProfileData(), getCardsData()])
   .then((values) => {
-    profileName.textContent = values[0].name;
-    profileJob.textContent = values[0].about;
-    profileImage.src = values[0].avatar;
+    const [profileData, cardsData] = values;
+    profileName.textContent = profileData.name;
+    profileJob.textContent = profileData.about;
+    profileImage.src = profileData.avatar;
 
-    values[1].forEach((item) => {
+    cardsData.forEach((item) => {
       cardsContainer.append(
-        createCard(item, values[0]._id, {
+        createCard(item, profileData._id, {
           handleDeleteCard,
           handleImageClick,
           toggleLikeBtn,
@@ -112,18 +118,18 @@ Promise.all([getProfileData(), getCardsData()])
 function handleProfileImage(evt) {
   evt.preventDefault();
   const submitButton = evt.target.querySelector(".popup__button");
-  submitButton.textContent = "Сохранение...";
+  changeElementText(submitButton, "Сохранение...");
   changeProfileAvatar(editProfileImageInput.value)
     .then((data) => {
-      profileImage.src = editProfileImageInput.value;
+      profileImage.src = data.avatar;
       closeModal(editProfileImagePopUp);
     })
     .catch((error) => {
       console.log(error);
     })
     .finally(() => {
-      setTimeout(() => {
-        submitButton.textContent = "Сохранить";
+      setTimeout(() => {   
+    changeElementText(submitButton, "Сохранить");
         editProfileImageInput.value = "";
       }, 600);
     });
@@ -133,25 +139,30 @@ function handleProfileImage(evt) {
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   const submitButton = evt.target.querySelector(".popup__button");
-  submitButton.textContent = "Сохранение...";
+  changeElementText(submitButton, "Сохранение...");
   patchProfileData(nameInput.value, jobInput.value)
     .then((data) => {
-      profileName.textContent = nameInput.value;
-      profileJob.textContent = jobInput.value;
+      profileName.textContent = data.name;
+      profileJob.textContent = data.about;
       closeModal(editProfilePopUp);
-      submitButton.textContent = "Сохранить";
     })
     .catch((error) => {
       console.log(error);
-    });
+    })
+    .finally(() => {
+      setTimeout(() => {
+        changeElementText(submitButton, "Сохранить");
+      }, 600);
+    })
 }
 
 // Добавление новой карточки
 function handleCardFormSubmit(evt) {
   evt.preventDefault();
   const submitButton = evt.target.querySelector(".popup__button");
-  submitButton.textContent = "Сохранение...";
-  postCardsData(cardNameInput.value, cardUrlInput.value).then((data) => {
+  changeElementText(submitButton, "Сохранение...");
+    postCardsData(cardNameInput.value, cardUrlInput.value)
+    .then((data) => {
     cardsContainer.prepend(
       createCard(data, data.owner._id, {
         handleDeleteCard,
@@ -163,13 +174,20 @@ function handleCardFormSubmit(evt) {
     );
     closeModal(createCardPopUp);
     createCardForm.reset();
-    submitButton.textContent = "Сохранить";
-  });
+  })
+  .catch((error) => {
+    console.log(error);
+  })
+  .finally(() => {
+    setTimeout(() => {
+      changeElementText(submitButton, "Сохранить");
+    }, 600);
+  })
 }
 
 // Удаление карточки
 deleteCardFormSubmitBtn.addEventListener("click", () => {
-  deleteCardFormSubmitBtn.textContent = "Удаление...";
+  changeElementText(deleteCardFormSubmitBtn, "Удаление...");
   deleteCardData(cardRemoveCandidateId)
     .then((data) => {
       deleteCard(cardsContainer, cardRemoveCandidateId);
@@ -180,7 +198,7 @@ deleteCardFormSubmitBtn.addEventListener("click", () => {
     })
     .finally(() => {
       setTimeout(() => {
-        deleteCardFormSubmitBtn.textContent = "Да";
+        changeElementText(deleteCardFormSubmitBtn, "Да");
       }, 600);
     });
 });

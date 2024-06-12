@@ -58,7 +58,10 @@ export const createCard = (
       putLikeById(cardData._id).then((data) => {
         likesSum.textContent = data.likes.length;
         toggleLikeBtn(evt.target);
-      });
+      })
+      .catch((error) => {
+        console.log(error);
+      })
     }
   });
 
