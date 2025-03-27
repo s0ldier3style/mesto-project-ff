@@ -1,4 +1,5 @@
 # Проектная работа *Mesto*
+![image](https://github.com/user-attachments/assets/bdcd06a2-7ee5-4c09-a422-b2348d1aaff6)
 
 ## Ссылка на [проект](https://s0ldier3style.github.io/mesto-project-ff/ "Mesto")
 
